@@ -2,35 +2,40 @@
 # Use a different appraoch to accomplish the same tasks as exercise-1
 
 # Install devtools package: allows installations from GitHub
-install.packages('devtools')
+# install.packages('devtools')
 
 # Install "fueleconomy" package from GitHub
-devtools::install_github("hadley/fueleconomy")
+# devtools::install_github("hadley/fueleconomy")
 
 # Require/library the fueleconomy package
+library(fueleconomy)
 
 # Install (if you haven't already) and load the `dplyr`package
-
+# install.packages("dplyr")
+library(dplyr)
 
 # You should have have access to the `vehicles` data.frame
 
 
 # Create a data.frame of vehicles from 1997
-
+my.vehicles <- filter(vehicles, year == 1997)
 
 # Use the `unique` function to verify that there is only 1 value in the `year` column of your new data.frame
-
+unique(my.vehicles$year)
 
 # Create a data.frame of 2-Wheel Drive vehicles that get more than 20 miles/gallon in the city
-
+two.wheel.drive <- filter(vehicles, cty > 20, drive == "2-Wheel Drive")
 
 # Of those vehicles, what is the vehicle ID of the vehicle with the worst hwy mpg?
-
+worst.hwy.mpg <- filter(two.wheel.drive, hwy == min(hwy))
 
 # Write a function that takes a `year` and a `make` as parameters, and returns 
 # The vehicle that gets the most hwy miles/gallon of vehicles of that make in that year
-
+best.hwy.mpg <- function(year_, make_) {
+  vehicle.make.year <- filter(vehicle, make == make_, year = year_)
+  return(filter(vehicle.make.year, hwy == max(hwy)))
+}
 
 # What was the most efficient honda model of 1995?
-
+best.honda.1995 <- best.hwy.mpg(1995, "Honda")
 
